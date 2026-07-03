@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pliant:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Inkplate Tools</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Inkplate Image Uploader</h1>
+      <p>Upload any photo to your Inkplate.</p>
+      <p>IMPORTANT: You cannot flash via Bluetooth in firefox or safari, use another browser then.</p>
+    </header>
+
+    <h2>IMPORTANT: Flash firmware before uploading image!!!</h2>
+    <p>NOTE: This firmware is only supported on the Inkplate 2 board as of now. If you already uploaded the firmware
+      once and
+      made no change to it after uploading images, you can upload images again and skip this part.</p>
+    <div id="flashBtnDiv">
+      <button id="flashBtn">Connect & Flash</button>
+    </div>
+
+    <h3>Flash Output:</h3>
+    <div id="terminal"></div>
+
+    <h2>Image Converter & Uploader</h2>
+
+    <main>
+      <div class="options">
+      <div class="panel">
+        <div class="field">
+          <label>Source image</label>
+          <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div class="field">
+          <label for="itemSelector">Display Size/Type</label>
+          <select id="itemSelector">
+            <option value="Inkplate-2">Soldered Inkplate 2</option>
+            <option value="1.54-epaper">Generic 1.54" E-Paper (200x200)</option>
+            <option value="0.96-oled">Generic 0.96" OLED (128x64)</option>
+            <option value="custom">Custom Resolution...</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="colorPaletteSel">Color mode</label>
+          <select id="colorPaletteSel">
+            <option value="bwr">Black, White, Red (3-Color)</option>
+            <option value="bw">Black & White Only (2-Color)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Dithering mode</label>
+          <select id="mode">
+            <option value="threshold">Threshold (no dithering)</option>
+            <option value="floyd" selected>Floyd–Steinberg</option>
+            <option value="atkinson">Atkinson</option>
+            <option value="jjn">Jarvis–Judice–Ninke</option>
+            <option value="ordered">Ordered (Bayer 4×4)</option>
+            <option value="random">Random noise</option>
+          </select>
+        </div>
+
+
+        <div class="field" id="customResolution" style="display: none;">
+          <label>Output size (px)</label>
+          <div class="row2">
+            <input type="number" id="outW" value="212" min="1" max="2000">
+            <input type="number" id="outH" value="104" min="1" max="2000">
+          </div>
+        </div>
+
+      <div class="field">
+        <div class="checkline"><input type="checkbox" id="keepAspect"><label for="keepAspect" style="margin:0;">Fit
+            inside
+            size, keep aspect ratio</label></div>
+        <div class="checkline" style="margin-top:6px;"><input type="checkbox" id="pixelArt"><label for="pixelArt"
+            style="margin:0;">Nearest-neighbor resize (pixel art)</label></div>
+      </div>
+
+      <div class="field" id="serpentineField">
+        <div class="checkline"><input type="checkbox" id="serpentine" checked><label for="serpentine"
+            style="margin:0;">Serpentine scan (error diffusion)</label></div>
+      </div>
+
+      <div class="field" id="amountField">
+        <label>Threshold / spread <span class="rangeval" id="amountVal">40</span></label>
+        <input type="range" id="amount" min="0" max="120" value="40">
+      </div>
+
+      <div class="field">
+        <label>Red bias <span class="rangeval" id="redBiasVal">0</span></label>
+        <input type="range" id="redBias" min="-60" max="60" value="0">
+        <div style="color:var(--dim); font-size:10.5px; margin-top:4px;">(pushes matches toward or away from red)</div>
+      </div></div>
+      
+      <h2 class="header">Preview</h2>
+  
+  <div class="content">
+    <div class="previews">
+
+      <div class="preview-box">
+        <h3>Source (resized, not 1:1)</h3>
+        <div class="mockup-container placeholder-bg">
+          <canvas id="srcCanvas" width="212" height="104"></canvas>
+        </div>
+      </div>
+
+      <div class="preview-box">
+        <h3>Dithered result</h3>
+        <div class="mockup-container inkplate-bg" data-device="Inkplate-2">
+          <canvas id="outCanvas" width="295" height="94"></canvas>
+        </div>
+      </div>
+
+    </div>
+    <div class="stats" id="stats">no image processed yet</div>
+  </div>
+
+  <div class="bottom-buttons">
+    <button id="runBtn" disabled>Dither image</button>
+    <button class="ghost" id="useOriginalSize" disabled>Use image's original size</button>
+  </div>
+
+  <h2 class="header">Save & Upload</h2>
+  <div id="arraySection" style="display:none;">
+    <div class="out-header">
+      <p>NOTE: Display will enable deep sleep mode after upload, to upload another image, press the RESET button on the back and wait for the splash screen.</p>
+      <h class="header">C array export</h3>
+      <div class="out-controls">
+        <select id="format">
+          <option value="planes">2 bitplanes (B/W + RED) (reccomended for inkplate)</option>
+          <option value="indexed">Indexed bytes (0=black,1=white,2=red)</option>
+        </select>
+        <div id="options">
+          <button id="copyBtn">Copy</button>
+          <button id="downloadBtn">Download .h</button>
+          <button id="uploadBleBtn">Upload via Bluetooth</button>
+        </div>
+        
+      </div>
+    </div>
+    <div class="textbox">
+      <div id="bleStatus">Status: Ready to upload</div>
+      <textarea id="output" spellcheck="false" readonly></textarea>
+    </div>
+    
+  </div>
+  <h3 class="empty header" id="emptyMsg">Submit an image to upload.</h3>
+  </div>
+  <div class="bottomtext">
+    <p>created by nothavoc in 2026.</p>
+    <a href="nothavoc.xyz">website</a>
+  </div>
+  </main>
+  <script type="module" src="script.js"></script>
+  </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,228 @@
+body {
+    background: #17171f;
+    background: linear-gradient(120deg, rgba(23, 23, 31, 1) 0%, rgba(57, 47, 87, 1) 100%);
+    color: aliceblue;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+a:link {
+  color: aliceblue;
+}
+
+a:visited {
+  color: #e4e4e4;
+}
+
+a:hover {
+  color: #fff;
+}
+.wrapper {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 80vh;
+    padding: 20px;
+    background-color: #161618;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+
+#terminal {
+    background: #222;
+    color: #fff;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    font-family: monospace;
+}
+
+header,
+.header,
+#flashBtnDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.options{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.bottomtext {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.previews {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 24px;
+    margin-block: 15px;
+}
+
+.preview-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.preview-box h3 {
+    margin: 0;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+.mockup-container {
+    position: relative;
+    width: 360px;
+    height: 174px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.mockup-container.placeholder-bg {
+    background-color: #f0f0f0;
+    border-radius: 6px;
+}
+
+.mockup-container.inkplate-bg[data-device="Inkplate-2"] {
+    width: 360px;
+    height: 174px;
+    background-image: url('./images/inkplate2.png') !important;
+    background-color: #161618;
+    border-radius: 6px;
+}
+.mockup-container.inkplate-bg[data-device="1.54-epaper"] {
+    width: 200px;
+    height: 200px;
+    background-image: none;
+    background-color: #e4e4e4;
+    border-radius: 6px;
+}
+.mockup-container.inkplate-bg[data-device="0.96-oled"] {
+    width: 256px;
+    height: 128px;
+    background-image: none;
+    background-color: #111111;
+    border-radius: 6px;
+}
+.mockup-container.inkplate-bg[data-device="custom"] {
+    inset: 0;
+    margin: auto;
+    background-image: none;
+    object-fit: contain;
+    display: block;
+}
+#outCanvas {
+    position: absolute;
+    width: 259px;
+    height: 93px;
+    top: 40px;
+    left: 70px;
+    display: block;
+}
+.mockup-container[data-device="custom"] #outCanvas,
+.mockup-container[data-device="1.54-epaper"] #outCanvas,
+.mockup-container[data-device="0.96-oled"] #outCanvas {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    top: 0;
+    left: 0;
+}
+
+#srcCanvas {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 328px;
+    height: 150px;
+    object-fit: contain;
+    display: block;
+}
+#outCanvas {
+    position: absolute;
+    width: 259px;
+    height: 93px;
+    top: 40px;
+    left: 70px;
+    display: block;
+}
+.mockup-container[data-device="custom"] #outCanvas {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+
+    width: 328px;
+    height: 150px;
+    object-fit: contain;
+
+    top: 0;
+    left: 0;
+}
+
+#srcCanvas {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+
+    width: 328px;
+    height: 150px;
+    object-fit: contain;
+
+    display: block;
+}
+
+#stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-family: sans-serif;
+    font-size: 14px;
+}
